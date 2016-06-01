@@ -2,11 +2,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <dirent.h>
+
+//In this example we need one PrintConsole for each screen
+PrintConsole topScreen, bottomScreen;
 
 void OptA()
 {
+    consoleSelect(&bottomScreen);
     printf("\x1b[2J");
     printf("OPT A\n");
+
+    DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir ("./BonziBUDDY/")) != NULL)
+    {
+        /* print all the files and directories within directory */
+        while ((ent = readdir (dir)) != NULL)
+        {
+            printf ("%s\n", ent->d_name);
+        }
+        closedir (dir);
+    }
+    else
+    {
+        mkdir("./BonziBUDDY", 0700);
+        /* could not open directory */
+        perror ("could not open directory");
+    }
+
     printf("\x1b[20;15HPress Start to exit.\n");
     gfxFlushBuffers();
     gfxSwapBuffers();
@@ -85,6 +109,7 @@ void OptD()
 
 int doStuff(int selection, const char **dongs)
 {
+    consoleSelect(&topScreen);
     printf("\x1b[2J");
     printf("Dongs: %d\n", selection);
     int i;
@@ -194,8 +219,9 @@ int main(int argc, char **argv)
     // Initialize services
     gfxInitDefault();
 
-    //Initialize console on top screen. Using NULL as the second argument tells the console library to use the internal console structure as current one
-    consoleInit(GFX_TOP, NULL);
+    //Initialize console for both screen using the two different PrintConsole we have defined
+    consoleInit(GFX_TOP, &topScreen);
+    consoleInit(GFX_BOTTOM, &bottomScreen);
 
     // Main loop
     while (aptMainLoop())
