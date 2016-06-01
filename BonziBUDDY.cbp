@@ -5,11 +5,13 @@
 		<Option title="BonziBUDDY" />
 		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
+		<Option default_target="cia" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="release">
 				<Option type="4" />
 				<Option compiler="gcc" />
+				<Option parameters="~/workspace/C/BonziBUDDY/output/BonziBUDDY.elf" />
 				<MakeCommands>
 					<Build command="$make -f $makefile" />
 					<CompileFile command="$make -f $makefile source/$file" />
@@ -52,6 +54,9 @@
 			<Target title="cia">
 				<Option type="4" />
 				<Option compiler="gcc" />
+				<Option parameters="~/workspace/C/BonziBUDDY/output/BonziBUDDY.elf" />
+				<Option host_application="citra" />
+				<Option run_host_application_in_terminal="1" />
 				<MakeCommands>
 					<Build command="$make -f $makefile $target" />
 					<CompileFile command="$make -f $makefile source/$file" />

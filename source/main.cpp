@@ -1,17 +1,3 @@
-/*
-	RTC example made by Aurelio Mannara for ctrulib
-	This code was modified for the last time on: 12/13/2014 2:45 UTC+1
-
-	This wouldn't be possible without the amazing work done by:
-	-Smealum
-	-fincs
-	-WinterMute
-	-yellows8
-	-plutoo
-	-mtheall
-	-Many others who worked on 3DS and I'm surely forgetting about
-*/
-
 #include <3ds.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +13,6 @@ void OptA()
     gspWaitForVBlank();
     while(true)
     {
-        printf("Why does this need to be here?\n");
         hidScanInput();
         u32 kDown = hidKeysDown();
         if (kDown & KEY_START)
@@ -173,9 +158,21 @@ void menu()
 
         if(kDown & KEY_A)
         {
-            printf("Enter");
-            OptA();
-            printf("Leave");
+            switch(selection)
+            {
+            case 1:
+                OptA();
+                break;
+            case 2:
+                OptB();
+                break;
+            case 3:
+                OptC();
+                break;
+            case 4:
+                OptD();
+                break;
+            }
             //Rerender the menu after exiting a submenu!
             doStuff(selection, dongs);
         }
